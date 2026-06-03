@@ -3,12 +3,13 @@
 // NexPrep - Core Configuration
 // ============================================================
 
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'nexprep');
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: '');
+define('DB_NAME', getenv('DB_NAME') ?: 'nexprep');
+define('DB_PORT', (int)(getenv('DB_PORT') ?: 3306));
 define('APP_NAME', 'NexPrep');
-define('APP_URL',  'http://localhost/nexprep');
+define('APP_URL',  getenv('APP_URL') ?: 'http://localhost/nexprep');
 define('APP_VERSION', '1.0.0');
 define('SESSION_TIMEOUT', 1800);
 define('POINTS_CORRECT',   4);
@@ -22,7 +23,7 @@ function getDB(): PDO {
     static $pdo = null;
     if ($pdo === null) {
         try {
-            $dsn = "mysql:host=".DB_HOST.";dbname=".DB_NAME.";charset=utf8mb4";
+            $dsn = "mysql:host=".DB_HOST.";port=".DB_PORT.";dbname=".DB_NAME.";charset=utf8mb4";
             $pdo = new PDO($dsn, DB_USER, DB_PASS, [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
