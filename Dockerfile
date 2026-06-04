@@ -7,11 +7,11 @@ COPY . /app/public/
 RUN printf '{\n\
     admin off\n\
 }\n\
-:{$PORT:80} {\n\
+:{$PORT:8080} {\n\
     root * /app/public\n\
     php_server\n\
 }\n' > /etc/caddy/Caddyfile
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
